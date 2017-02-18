@@ -44,17 +44,19 @@ public class DabSensorListener implements SensorEventListener{
     public void determine(float[] values){
         //filtering
         for(int i = 1; i < 100; i++){
-            array[i-1][0] = array[i][0];
-            array[i-1][1] = array[i][1];
-            array[i-1][2] = array[i][2];
+            array[0][i-1] = array[0][i];
+            array[1][i-1] = array[1][i];
+            array[2][i-1] = array[2][i];
         }
 
         //adding new value to last element FILTERING
-        array[99][0] += ( values[0] - array[99][0] ) / 10;
-        array[99][1] += ( values[1] - array[99][1] ) / 10;
-        array[99][2] += ( values[2] - array[99][2] ) / 10;
+        array[0][99] += ( values[0] - array[0][99] ) / 10;
+        array[1][99] += ( values[1] - array[1][99] ) / 10;
+        array[2][99] += ( values[2] - array[2][99] ) / 10;
 
         StateChange();
+
+
 
     }
     public void StateChange(){
@@ -122,9 +124,6 @@ public class DabSensorListener implements SensorEventListener{
                 state2 = zSTATE.zDAB;
         }
     }
-
-
-
     @Override
     public void onAccuracyChanged(Sensor sensor, int i) {}
 }
